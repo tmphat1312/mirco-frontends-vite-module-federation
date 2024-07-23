@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Boundary } from "./Boundary";
 import { Container } from "./Container";
 import { tractors } from "./tractors";
-import { recommendations } from "./recommendations";
 import pluralize from "pluralize";
+
+import RelatedProducts from "related_products/RelatedProducts";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -14,7 +15,6 @@ export default function App() {
   const [tractorId, setTractorId] = useState(() => tractors[0].id);
   const [noItemsInBasket, setNoItemsInBasket] = useState(0);
   const selectedTractor = tractors.find((tractor) => tractor.id === tractorId);
-  const recommendedIds = recommendations[tractorId];
 
   return (
     <Container>
@@ -63,19 +63,7 @@ export default function App() {
             </footer>
           </section>
           <section className="col-span-2">
-            <Boundary>
-              <h3 className="mb-2 text-lg">Related products</h3>
-              <menu className="space-y-1.5">
-                {recommendedIds.map((productId) => (
-                  <li key={productId}>
-                    <img
-                      src={`./images/recommendations/recommendation-${productId}.jpg`}
-                      alt={productId}
-                    />
-                  </li>
-                ))}
-              </menu>
-            </Boundary>
+            <RelatedProducts tractorId={tractorId} />
           </section>
         </main>
       </Boundary>
